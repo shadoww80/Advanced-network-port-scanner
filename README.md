@@ -117,6 +117,13 @@ python main.py
 
 ---
 
+# 📸 Screenshots
+
+## Application Home
+
+![Home Screen](assets/screenshots/home.png)
+
+
 # 💻 Example Output
 
 ```text
