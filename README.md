@@ -1,112 +1,221 @@
-# Advanced Network Port Scanner
+# 🚀 Advanced Network Port Scanner
 
-A production-quality desktop TCP port scanner built with Python and CustomTkinter. Features a modern dark cybersecurity UI, multi-threaded scanning, service detection, banner grabbing, and CSV export.
+![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
+![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-green)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Status](https://img.shields.io/badge/Status-Active-success)
+![GitHub last commit](https://img.shields.io/github/last-commit/shadoww80/Advanced-network-port-scanner)
+![GitHub repo size](https://img.shields.io/github/repo-size/shadoww80/Advanced-network-port-scanner)
 
-![Python](https://img.shields.io/badge/Python-3.9+-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
+A professional Python-based **Advanced Network Port Scanner** designed for fast TCP port scanning, service detection, banner grabbing, DNS resolution, and CSV export.
 
-## Features
+This project follows a modular architecture, making it easy to extend with additional networking features.
 
-- **Modern dark UI** — Cyber-security themed interface powered by CustomTkinter
-- **TCP port scanning** — Concurrent scanning via `ThreadPoolExecutor` (100 workers)
-- **IP & domain support** — Resolves hostnames automatically
-- **Configurable port range** — Start and end port inputs (1–65535)
-- **Live progress bar** — Real-time scan completion percentage
-- **Results table** — Treeview with port, status, service, response time, and banner
-- **Service detection** — Identifies 40+ common services by port number
-- **Banner grabbing** — HTTP(S), SSH, FTP, SMTP, POP3, IMAP, and Telnet
-- **Open port counter** — Live count of discovered open ports
-- **Stop scan** — Gracefully cancel an in-progress scan
-- **Export CSV** — Save results to a timestamped CSV file
-- **Clear results** — Reset the table and counters
-- **Thread-safe GUI** — All UI updates marshalled through `after()`
+---
 
-## Project Structure
+# ✨ Features
 
-```
+- ⚡ Fast Multi-Port TCP Scanning
+- 🌐 DNS Resolution
+- 🔍 Service Detection
+- 📡 Banner Grabbing
+- 🎨 Clean Terminal UI
+- 📊 CSV Export
+- ✅ Input Validation
+- 📂 Modular Project Structure
+- 📝 Logging Support
+- 🧩 Easily Extendable
+
+---
+
+# 📂 Project Structure
+
+```text
 Advanced-Network-Port-Scanner/
-├── main.py                     # Application entry point
-├── ui.py                       # Compatibility shim
-├── scanner.py                  # Compatibility shim
-├── banner.py                   # Compatibility shim
+│
+├── portscanner/
+│   ├── core/
+│   ├── network/
+│   ├── ui/
+│   ├── config.py
+│   ├── constants.py
+│   ├── logging_config.py
+│   ├── models.py
+│   └── validation.py
+│
+├── assets/
+├── exports/
+├── logs/
+│
+├── main.py
+├── scanner.py
+├── banner.py
+├── ui.py
 ├── requirements.txt
-├── README.md
-└── portscanner/                # Application package
-    ├── __init__.py
-    ├── __main__.py             # python -m portscanner
-    ├── constants.py            # Shared constants
-    ├── types.py                # Callback type aliases
-    ├── core/
-    │   └── scanner.py          # PortScanner engine
-    ├── network/
-    │   ├── banner.py           # BannerGrabber
-    │   ├── resolver.py         # Host resolution
-    │   ├── services.py         # Well-known port mappings
-    │   └── socket_utils.py     # Shared socket helpers
-    └── ui/
-        ├── app.py              # PortScannerApp window
-        └── theme.py            # Color palette
+└── README.md
 ```
 
-## Requirements
+---
 
-- Python 3.9 or later
-- Windows, macOS, or Linux
+# 🏗 Architecture
 
-## Installation
+```text
+             User
+               │
+               ▼
+        Terminal Interface
+               │
+               ▼
+          Input Validation
+               │
+               ▼
+          Core Scanner
+        ┌──────────────┐
+        │              │
+        ▼              ▼
+ Banner Grabber   DNS Resolver
+        │              │
+        └──────┬───────┘
+               ▼
+        Service Detection
+               │
+               ▼
+          CSV Export
+```
 
-1. Clone or download this repository.
+---
 
-2. Create and activate a virtual environment (recommended):
+# ⚙ Installation
 
-   ```bash
-   python -m venv venv
+Clone the repository
 
-   # Windows
-   venv\Scripts\activate
+```bash
+git clone https://github.com/shadoww80/Advanced-network-port-scanner.git
+```
 
-   # macOS / Linux
-   source venv/bin/activate
-   ```
+Move into the project
 
-3. Install dependencies:
+```bash
+cd Advanced-network-port-scanner
+```
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+Install dependencies
 
-## Usage
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+# ▶ Usage
+
+Run the scanner
 
 ```bash
 python main.py
 ```
 
-Alternative entry points:
+---
 
-```bash
-python -m portscanner
+# 💻 Example Output
+
+```text
+======================================
+      ADVANCED NETWORK PORT SCANNER
+======================================
+
+Target :
+scanme.nmap.org
+
+Scanning...
+
+PORT      STATUS      SERVICE
+22        OPEN        SSH
+80        OPEN        HTTP
+443       OPEN        HTTPS
+
+Banner:
+Apache/2.4
+
+Scan completed successfully.
+
+Results exported to exports/results.csv
 ```
 
-1. Enter a **target** — IP address (e.g. `192.168.1.1`) or domain (e.g. `scanme.nmap.org`)
-2. Set **Start Port** and **End Port** (defaults: 1–1024)
-3. Click **Start Scan**
-4. Review open ports in the results table
-5. Use **Export CSV** to save results, or **Clear** to reset
+---
 
-> **Note:** Only scan networks and hosts you own or have explicit permission to test. Unauthorized port scanning may violate laws or policies.
+# 🛠 Technologies Used
 
-## Architecture
+- Python
+- socket
+- threading
+- csv
+- logging
+- ipaddress
+- rich (if enabled)
 
-| Module | Responsibility |
-|--------|----------------|
-| `portscanner/ui/app.py` | Window layout, user actions, thread-safe UI updates |
-| `portscanner/core/scanner.py` | Scan orchestration, worker pool, progress throttling |
-| `portscanner/network/banner.py` | Protocol-aware banner grabbing on open sockets |
-| `portscanner/network/resolver.py` | IPv4 validation and DNS resolution |
-| `portscanner/network/services.py` | Well-known port-to-service mappings |
+---
 
-The scanner runs on a background thread. Worker threads publish results through callbacks that schedule GUI updates on the main thread via `tkinter.after()`.
+# 📊 Project Highlights
 
-## License
+✔ Modular Design
 
-MIT License — use responsibly and only on authorized targets.
+✔ Clean Code
+
+✔ Banner Grabbing
+
+✔ DNS Resolution
+
+✔ Service Detection
+
+✔ CSV Export
+
+✔ Easy to Extend
+
+---
+
+# 🚀 Future Improvements
+
+- UDP Port Scanning
+- SYN Scan
+- OS Detection
+- IPv6 Support
+- JSON Export
+- GUI Version
+- Vulnerability Detection
+- NSE Script Support
+- Mass Scanning
+- Network Discovery
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome.
+
+1. Fork the repository
+2. Create a new branch
+3. Commit your changes
+4. Open a Pull Request
+
+---
+
+# 📜 License
+
+This project is licensed under the MIT License.
+
+---
+
+# ⭐ Support
+
+If you found this project useful,
+
+⭐ Star the repository
+
+🍴 Fork it
+
+📢 Share it
+
+---
+
+Made with ❤️ by **ShadowW80**
